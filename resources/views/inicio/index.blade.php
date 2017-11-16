@@ -10,7 +10,7 @@
 @endsection
 
 @section('cabecera')
-    Inicio
+    {{trans('str.menu.home.titulo')}}
 @endsection
 
 @section('contenedor')
@@ -21,8 +21,8 @@
     <div class="row">
         <!-- Lógica para mostrar tabla -->
         <div class="rowsection" id="table">
-            <center><h1>¡Bienvenido a Guanajoven!</h1></center>
-            <center><img src="{{ url('img/logo_guanajoven.png') }}"/></center>
+            <center><h1>{{trans('str.menu.home.welcome')}}</h1></center>
+            <center><img src="{{trans('str.menu.home.icono')}}"/></center>
         </div>
     </div>
     <!--Modal para eliminar joven-->
@@ -41,5 +41,3 @@
         </form>
     </div>
 @endsection
-
-
