@@ -143,14 +143,10 @@ class UserApiController extends Controller {
                         'ruta_imagen' => $ruta_imagen
                     ]);
 
-                    $fechaLimite = Carbon::createFromFormat('d/m/Y', $request->input("fecha_nacimiento"));
-                    $fechaLimite->year = $fechaLimite->year + 30;
-
                     $codigo_guanajoven = CodigoGuanajoven::create([
                         'id_usuario' => $id,
                         'token' => str_random(128),
-                        'fecha_expiracion' => Carbon::now('America/Mexico_City')->addDay(),
-                        'fecha_limite' => $fechaLimite
+                        'fecha_expiracion' => Carbon::now('America/Mexico_City')->addDay()
                     ]);
                     if (isset($usuario) && isset($datosUsuario)) {
                         $data =User::
@@ -422,19 +418,11 @@ class UserApiController extends Controller {
         $user = Auth::guard('api')->user();
         $success = true;
         $errors = [];
-        if($user->codigoGuanajoven->fecha_limite->gt(Carbon::now('America/Mexico_City'))) {
-            $user->codigoGuanajoven->token = str_random(128);
-            $user->codigoGuanajoven->fecha_expiracion = Carbon::now('America/Mexico_City')->addDay(30);
-            $user->codigoGuanajoven->save();
-            //$token = $user->codigoGuanajoven->id_codigo_guanajoven."-".$user->datosUsuario->curp."-".$user->datosUsuario->nombre."-".$user->email;
-            $token =  $user->codigoGuanajoven->token;
-        }
-        else {
-            $token = null;
-            $success = false;
-            $errors[] = "El token de código joven no se pudo actualizar";
-        }
-
+        $user->codigoGuanajoven->token = str_random(128);
+        $user->codigoGuanajoven->fecha_expiracion = Carbon::now('America/Mexico_City')->addDay(30);
+        $user->codigoGuanajoven->save();
+        //$token = $user->codigoGuanajoven->id_codigo_guanajoven."-".$user->datosUsuario->curp."-".$user->datosUsuario->nombre."-".$user->email;
+        $token =  $user->codigoGuanajoven->token;
 
         return response()->json(array(
             'data' => $token,

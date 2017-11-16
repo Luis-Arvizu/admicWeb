@@ -15,15 +15,13 @@ class CodigoGuanajoven extends Model
         'created_at',
         'updated_at',
         'deleted_at',
-        'fecha_expiracion',
-        'fecha_limite'
+        'fecha_expiracion'
     ];
 
     protected $fillable = [
         'id_usuario',
         'token',
-        'fecha_expiracion',
-        'fecha_limite'
+        'fecha_expiracion'
     ];
 
 
